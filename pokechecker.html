@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokechecker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header></header>
+    <div id="main-container">
+      <div id="banner">
+            <h1 class="title">
+              Pokechecker
+            </h1>
+            <p class="subtitle">
+              Check a Pokemon team's defensive and offensive coverage
+            </p>
+      </div>
+      <main>
+          <div id="selection-container">
+            <div class="columns" id="row-1">
+              <div class="column">Name</div>
+            </div>
+            <div class="columns" id="row-2">
+              <div class="column is-three-fifths">
+                <input type="text" class="input" placeholder="Charizard">
+              </div>
+              <div class="column is-one-fifth"></div>
+              <div class="column is-one-fifth btnPadding">
+                <input type="button" value="Add" id="addBtn" class="button is-success is-fullwidth">
+              </div>
+            </div>
+            <div class="columns" id="row-3">
+              <div class="column is-two-fifths"><p class="">Pokemon type(s)</p></div>
+              <div class="column is-three-fifths"></div>
+            </div>
+            <div class="columns" id="row-4">
+              <div class="column is-one-fifth"><div class="pokeType TypeShell" id="primaryTypeShell">NONE</div></div>
+              <div class="column is-one-fifth"><div class="pokeType TypeShell" id="secondaryTypeShell">NONE</div></div>
+              <div class="column is-two-fifths"></div>
+              <div class="column is-one-fifth btnPadding">
+                <input type="button" value="Clear" id="clrBtn" class="button is-fullwidth is-dark is-outlined">
+              </div>
+            </div>
+            <div id="teamContainer">
+              <ul id="teamList">
+                <!-- /// Pokemon /// -->
+                <li class="added-pokemon columns">
+                  <div class="column is-two-fifths addedPokemonName" title="Corviknight">
+                    Corviknight
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Flying">
+                      Flying
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Steel">
+                      Steel
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth deleteBtnWrapper">
+                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
+                  </div>
+                </li>
+                <!-- /// Pokemon /// -->
+                <li class="added-pokemon columns">
+                  <div class="column is-two-fifths addedPokemonName" title="Raichu-alola">
+                    Raichu-alola
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Electric">
+                      Electric
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Psychic">
+                      Psychic
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth deleteBtnWrapper">
+                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
+                  </div>
+                </li>
+                <!-- /// Pokemon /// -->
+
+                <li class="added-pokemon columns">
+                  <div class="column is-two-fifths addedPokemonName" title="Toxicroak">
+                    Toxicroak
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Fighting">
+                      Fighting
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Poison">
+                      Poison
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth deleteBtnWrapper">
+                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
+                  </div>
+                </li>
+                <!-- /// Pokemon /// -->
+                <li class="added-pokemon columns">
+                  <div class="column is-two-fifths addedPokemonName" title="Rhyperior">
+                    Rhyperior
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Ground">
+                      Ground
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Rock">
+                      Rock
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth deleteBtnWrapper">
+                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
+                  </div>
+                </li> 
+                 <!-- /// Pokemon /// -->
+                 <li class="added-pokemon columns">
+                  <div class="column is-two-fifths addedPokemonName" title="Dragapult">
+                    Dragapult
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Ghost">
+                      Ghost
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth">
+                    <div class="pokeType Dragon">
+                      Dragon
+                    </div>
+                  </div>
+                  <div class="column is-one-fifth deleteBtnWrapper">
+                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
+                  </div>
+                </li> 
+              </ul>
+            </div>
+          </div>
+          <div id="results-container">
+              <h4>Display the results here!</h4>
+          </div>
+      </main>
+    </div>
+
+
+
+    
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="pokechecker.js"></script>
+</body>
+</html>

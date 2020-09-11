@@ -1,0 +1,128 @@
+[
+    {
+        "name":"Normal",
+        "foreColor":"#555555",
+        "bgColor": "#C8C8C8",
+        "weakDef": ["Fighting"],
+        "strongAtk": [""]
+    },
+    {
+        "name":"Fighting",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#c03028",
+        "weakDef": ["Fairy","Flying","Psychic"],
+        "strongAtk": ["Dark","Ice","Normal","Rock","Steel"]
+    },
+    {
+        "name":"Flying",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#a890f0",
+        "weakDef": ["Electric","Ice","Rock"],
+        "strongAtk": ["Bug","Fighting","Grass"]
+    },
+    {
+        "name":"Water",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#0022BB",
+        "weakDef": ["Electric","Grass"],
+        "strongAtk": ["Fire","Ground","Rock"]
+    },
+    {
+        "name":"Fire",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#f08030",
+        "weakDef": ["Ground","Rock","Water"],
+        "strongAtk": ["Bug","Grass","Ice","Steel"]
+    },
+    {
+        "name":"Grass",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#009000",
+        "weakDef": ["Bug","Fire","Flying","Ice","Poison"],
+        "strongAtk": ["Ground","Rock","Water"]
+    },
+    {
+        "name":"Electric",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#f8d030",
+        "weakDef": ["Ground"],
+        "strongAtk": ["Flying","Water"]
+    },
+    {
+        "name":"Ground",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#e0c068",
+        "weakDef": ["Grass","Ice","Water"],
+        "strongAtk": ["Electric","Fire","Poison","Rock","Steel"]
+    },
+    {
+        "name":"Rock",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#b8a038",
+        "weakDef": ["Fighting","Grass","Ground","Steel","Water"],
+        "strongAtk": ["Bug","Fire","Flying","Ice"]
+    },
+    {
+        "name":"Dragon",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#7038f8",
+        "weakDef": ["Dragon","Fairy","Ice"],
+        "strongAtk": ["Dragon"]
+    },
+    {
+        "name":"Steel",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#b8b8d0",
+        "weakDef": ["Fighting","Fire","Ground"],
+        "strongAtk": ["Fairy","Ice","Rock"]
+    },
+    {
+        "name":"Fairy",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#F98CFF",
+        "weakDef": ["Poison","Steel"],
+        "strongAtk": ["Dark","Dragon","Fighting"]
+    },
+    {
+        "name":"Psychic",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#f85888",
+        "weakDef": ["Bug","Dark","Ghost"],
+        "strongAtk": ["Fighting","Poison"]
+    },
+    {
+        "name":"Ghost",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#705898",
+        "weakDef": ["Dark","Ghost"],
+        "strongAtk": ["Ghost","Psychic"]
+    },
+    {
+        "name":"Dark",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#705848",
+        "weakDef": ["Bug","Fairy","Fighting"],
+        "strongAtk": ["Ghost","Psychic"]
+    },
+    {
+        "name":"Bug",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#a8b820",
+        "weakDef": ["Fire","Flying","Rock"],
+        "strongAtk": ["Dark","Grass","Psychic"]
+    },
+    {
+        "name":"Ice",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#98d8d8",
+        "weakDef": ["Fighting","Fire","Rock","Steel"],
+        "strongAtk": ["Dragon","Flying","Grass","Ground"]
+    },
+    {
+        "name":"Poison",
+        "foreColor":"#EEEEEE",
+        "bgColor": "#a040a0",
+        "weakDef": ["Ground","Psychic"],
+        "strongAtk": ["Fairy","Grass"]
+    }
+]
