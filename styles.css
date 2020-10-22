@@ -29,10 +29,11 @@ main {display: flex;justify-content: space-between;height: 1000px;width: 1000px;
 #primaryTypeShell{ border-radius: 12px 0 0 12px; }
 #secondaryTypeShell{ border-radius: 0 12px 12px 0; }
 #primaryTypeShell,#secondaryTypeShell {width: 100%; height: 100%; line-height: 40px}
+.TypeShell:hover,.deleteBtn:hover,.pokeType:hover { cursor: pointer;}
 
 
 /*--- PokeTypes specific colors --- To Delete when JSON read is implemented*/
-.pokeType.Normal {color: #555555; background-color:#C8C8C8;}
+.pokeType.Normal {color: #EEEEEE; background-color:#C8C8C8;}
 .pokeType.Fighting{color: #EEEEEE; background-color:#c03028;}
 .pokeType.Flying {color: #EEEEEE; background-color:#a890f0;}
 .pokeType.Water {color: #EEEEEE; background-color:#0022BB;}
@@ -63,5 +64,19 @@ main {display: flex;justify-content: space-between;height: 1000px;width: 1000px;
 }
 .added-pokemon.columns{margin:0;}
 .addedPokemonName {overflow:hidden;}
-.deleteBtnWrapper {display: block; text-align: center;}
-.deleteBtn {color: #D32F2F}
+.deleteBtnWrapper {display: grid; place-items: center;}
+.deleteBtn {color: #D32F2F; width: 20px; height: 20px;}
+
+/* --- Type picker popup --- */
+#typePickerPopupContainer {display: block;
+background-color: #ffffff; border-radius: 4px; padding: 4px;
+display: grid; place-items: center;
+position: absolute; margin-top: 200px;
+transition: all 0.25s ease-in-out;
+opacity: 1;
+box-shadow: 0px 5px 5px 2px rgba(0,0,0,0.6);
+}
+#typePickerPopupContainer.is-invisible {opacity: 0;}
+
+#typePickerPopupContainer .columns {margin-bottom: 0;}
+#typePickerPopupContainer .column {padding: 4px;}
