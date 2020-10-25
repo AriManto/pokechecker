@@ -46,92 +46,7 @@
             </div>
             <div id="teamContainer">
               <ul id="teamList">
-                <!-- /// Pokemon /// -->
-                <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Corviknight" data-field="pokeName">
-                    Corviknight
-                  </div>
-                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
-                      <div class="pokeType Flying" data-field="firstType">
-                        Flying
-                      </div>
-                      <div class="pokeType Steel" data-field="secondType">
-                        Steel
-                    </div>
-                  </div>
-                  <div class="column is-one-fifth deleteBtnWrapper btn">
-                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
-                  </div>
-                </li>
-                <!-- /// Pokemon /// -->
-                <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Raichu-alola" data-field="pokeName">
-                    Raichu-alola
-                  </div>
-                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
-                    <div class="pokeType Electric" data-field="firstType">
-                      Electric
-                    </div>
-                    <div class="pokeType Psychic" data-field="secondType">
-                      Psychic
-                    </div>
-                  </div>
-                  <div class="column is-one-fifth deleteBtnWrapper btn">
-                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
-                  </div>
-                </li>
-                <!-- /// Pokemon /// -->
-
-                <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Toxicroak" data-field="pokeName">
-                    Toxicroak
-                  </div>
-                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
-                    <div class="pokeType Fighting" data-field="firstType">
-                      Fighting
-                    </div>
-                    <div class="pokeType Poison" data-field="secondType">
-                      Poison
-                    </div>
-                  </div>
-                  <div class="column is-one-fifth deleteBtnWrapper btn">
-                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
-                  </div>
-                </li>
-                <!-- /// Pokemon /// -->
-                <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Rhyperior" data-field="pokeName">
-                    Rhyperior
-                  </div>
-                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
-                    <div class="pokeType Ground" data-field="firstType">
-                      Ground
-                    </div>
-                    <div class="pokeType Rock" data-field="secondType">
-                        Rock
-                    </div>
-                  </div>
-                  <div class="column is-one-fifth deleteBtnWrapper btn">
-                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
-                  </div>
-                </li> 
-                 <!-- /// Pokemon /// -->
-                 <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Dragapult" data-field="pokeName">
-                    Dragapult
-                  </div>
-                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
-                    <div class="pokeType Ghost" data-field="firstType">
-                      Ghost
-                    </div>
-                    <div class="pokeType Dragon" data-field="secondType">
-                      Dragon
-                    </div>
-                  </div>
-                  <div class="column is-one-fifth deleteBtnWrapper btn">
-                    <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
-                  </div>
-                </li> 
+                
               </ul>
             </div>
           </div>
@@ -239,8 +154,32 @@
               </div>
             </div>
           </div>
-          <div id="results-container">
-              <h4>Display the results here!</h4>
+          <div id="results-wrapper">
+              <h4>Analysis</h4>
+              <div class="results-container">
+                  <div>
+                    <p>Types count</p>
+                    <ul id="def-types-count">
+                    </ul> 
+                  </div>
+                  <div class="is-invisible">
+                    <p>Defensive Weaknesses</p>
+                    <ul id="def-weak-container">
+                      <li>
+                        <span class="pokeType Ground">Ground</span>
+                        <span class="count">3</span>
+                      </li>
+                      <li>
+                        <span class="pokeType Grass">Grass</span>
+                        <span class="count">2</span>
+                      </li>
+                      <li>
+                        <span class="pokeType Fairy">Fairy</span>
+                        <span class="count">2</span>
+                      </li>
+                    </ul>
+                  </div>
+              </div>
           </div>
       </main>
     </div>

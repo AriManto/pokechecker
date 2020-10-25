@@ -6,11 +6,23 @@ let $primaryType,$secondaryType,$typePickerContainer;
 let $teamList;
 let $addBtn, $clrBtn, $pokeNameInput;
 let selectingTypeShell;
+let $defTypesCountList;
 let debug;
-
+// Model entities
+let teamListArray;
+let defTypesCountListArray;
+//#region // Data - should be fetched from JSON
 let pokeTypes = ["Normal", "Fighting", "Flying", "Water", "Fire", "Grass", "Electric", "Ground", "Rock",
 "Dragon", "Steel", "Fairy", "Psychic", "Ghost", "Dark", "Bug", "Ice", "Poison"];
-let teamListArray;
+let initialListArray = [
+{"name":"Rhyperior","primaryType":"Ground","secondaryType":"Rock"},
+{"name":"Crawdaunt","primaryType":"Water","secondaryType":"Dark"},
+{"name":"Excadrill","primaryType":"Ground","secondaryType":"Steel"},
+{"name":"Urshifu-single strike","primaryType":"Fighting","secondaryType":"Dark"},
+{"name":"Hydreigon","primaryType":"Dragon","secondaryType":"Dark"},
+{"name":"Tyranitar","primaryType":"Rock","secondaryType":"Dark"}
+];
+//#endregion
 //#region Classes
 /* Classes declaration */
 class PokeType {
@@ -111,6 +123,7 @@ function clearTypeShells(){
 function togglePopupVisibility(){
     toggleStyle($typePickerContainer,'is-invisible');
 }
+
 // }}}}} Event handler de click de primaryType y secondaryType
 function onClick_PrimaryTypeShell(){
     selectingTypeShell = $primaryType;
@@ -122,47 +135,52 @@ function onClick_SecondaryTypeShell(){
 }
 function onClick_addBtn(){
     // If name is empty assign a random name (con el teamlist array.length)
-    // Add to team list
-    // Reset the name input and the type shells
-    ;debugger
-    //$pokeNameInput.value
-    // should have at least one type
     let newPokeName = $pokeNameInput.value;
-    let htmlPokeRow = skeletonHtmlPokeRow();
-    htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName',newPokeName);
     let firstType = $primaryType.innerText;
-    if (firstType != undefined && firstType != "NONE") {
-        htmlPokeRow = htmlPokeRow.replace('templateFirstType is-hidden','templateFirstType');
-        htmlPokeRow = htmlPokeRow.replaceAll('templateFirstType',firstType);
-    }
     let secondType = $secondaryType.innerText;
-    if (secondType != undefined && secondType != "NONE") {
-        htmlPokeRow = htmlPokeRow.replace('templateSecondType is-hidden','templateSecondType');
-        htmlPokeRow = htmlPokeRow.replaceAll('templateSecondType',secondType);
-    }
-    ;debugger
+    let htmlPokeRow = mapPokeToRow(newPokeName,firstType,secondType);
+    htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName',newPokeName);
     $teamList.innerHTML += htmlPokeRow;
     clearInputs();
     updateTeamList();
 }
+function mapPokeToRow(name,firstType,secondType) {
+    let htmlPokeRow = skeletonHtmlPokeRow();
+    htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName',name);
+    if (firstType != undefined && firstType != "NONE") {
+        htmlPokeRow = htmlPokeRow.replace('templateFirstType is-hidden','templateFirstType');
+        htmlPokeRow = htmlPokeRow.replaceAll('templateFirstType',firstType);
+    }
+    if (secondType != undefined && secondType != "NONE") {
+        htmlPokeRow = htmlPokeRow.replace('templateSecondType is-hidden','templateSecondType');
+        htmlPokeRow = htmlPokeRow.replaceAll('templateSecondType',secondType);
+    }
+    return htmlPokeRow;
+}
 function skeletonHtmlPokeRow(){
-    return '<li class="added-pokemon columns">'
-    +'<!-- /// Pokemon /// -->'
-    +'<div class="column is-two-fifths addedPokemonName" title="templatePokemonName" data-field="pokeName">'
-    + 'templatePokemonName'
-    +'</div>'
-    +'<div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">'
-    +  '<div class="pokeType templateFirstType is-hidden" data-field="firstType">'
-    +    'templateFirstType'
-    +  '</div>'
-    +  '<div class="pokeType templateSecondType is-hidden" data-field="secondType">'
-    +    'templateSecondType'
-    +  '</div>'
-    +'</div>'
-    +'<div class="column is-one-fifth deleteBtnWrapper btn">'
-    +  '<div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>'
-    +'</div>'
-  +'</li>'
+    return `<li class="added-pokemon columns">
+    <!-- /// Pokemon /// -->
+    <div class="column is-two-fifths addedPokemonName" title="templatePokemonName" data-field="pokeName">
+    templatePokemonName
+    </div>
+    <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
+     <div class="pokeType templateFirstType is-hidden" data-field="firstType">
+       templateFirstType
+     </div>
+     <div class="pokeType templateSecondType is-hidden" data-field="secondType">
+        templateSecondType
+      </div>
+    </div>
+    <div class="column is-one-fifth deleteBtnWrapper btn">
+      <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
+    </div>
+  </li>`
+}
+function initializeTeamList(){
+    initialListArray.forEach((poke) => {
+        let htmlPokeRow = mapPokeToRow(poke.name,poke.primaryType,poke.secondaryType);
+        $teamList.innerHTML+=htmlPokeRow;
+    })
 }
 
 function clearInputs(){
@@ -181,9 +199,7 @@ function teamListHandler(e){
     // Click on a type - open or close details
     if (e.path.find((x)=>x.classList?.contains("pokeType"))!==undefined){
         let type = e.path.find((x)=> x.classList.contains("pokeType")).innerText;
-        console.log(type)
     }
-    debug = e;
 }
 function typePickerHandler(e){
     // Assign selected type to the 
@@ -209,10 +225,10 @@ function mapHtmlListToPokeList(htmlList){
                     newPoke.pokeName = div.innerText;
                     break;
                 case "typeWrapper":
-                    if (div.children[0].innerText !== "templateFirstType" && div.children[0].innerText !== "") {
+                    if (div.children[0].innerText.trim() !== "templateFirstType" && div.children[0].innerText !== "") {
                         newPoke.primaryType = div.children[0].innerText
                     }
-                    if (div.children[1].innerText !== "templateSecondType" && div.children[1].innerText !== "") {
+                    if (div.children[1].innerText.trim() !== "templateSecondType" && div.children[1].innerText !== "") {
                         newPoke.secondaryType = div.children[1].innerText
                     }
                     break;
@@ -229,28 +245,68 @@ function mapHtmlListToPokeList(htmlList){
 }
 function updateTeamList(){
     // recalculate teamList array
-    ;debugger
     teamListArray = mapHtmlListToPokeList($teamList.children);
+    defTypesCountListArray = calculateTeamTypesCount();
+    //defTypesCountListArray = orderDefTypesDescending();
+    // update analytics
+    $defTypesCountList.innerHTML = defTypesCountListArray;
+}
+function calculateTeamTypesCount() {
+    defTypesCountListArray = [];
+    pokeTypes.forEach((type) => {
+        let typeCount = new Object({"type": type,"count":0});
+        defTypesCountListArray.push(typeCount);
+    });
+    teamListArray.forEach((poke) => {
+        let primaryType = poke.primaryType;
+        let secondaryType = poke.secondaryType;
+        if (primaryType != undefined && primaryType != "") {
+            defTypesCountListArray.find((x) => x.type == primaryType).count += 1;
+        }
+        if (secondaryType != undefined && secondaryType != "") {
+            defTypesCountListArray.find((x) => x.type == secondaryType).count += 1;
+        }
+    })
+    console.groupCollapsed("Type count list");
+    console.dir(defTypesCountListArray);
+    console.groupEnd();
+    ;debugger
+    return mapDefTypesCountToHTML(defTypesCountListArray);
+}
+function mapDefTypesCountToHTML(countArray){
+    let HTMLcountList = "";
+    countArray.forEach((typeCount) => {
+        if (typeCount.count > 0) {
+            HTMLcountList+= `<li>
+                <span class="pokeType ${typeCount.type}">${typeCount.type}</span>
+                <span class="count">${typeCount.count}</span>
+            </li>`
+        }
+    })
+    return HTMLcountList;
 }
 //#endregion
 
 //#region Main method / OnReady / initialize
-$primaryType = document.querySelector('#'+primaryTypeShellState.id);
-$secondaryType = document.querySelector('#'+secondaryTypeShellState.id);
-$typePickerContainer = document.querySelector('#'+typePickerPopupState.id);
+$pokeNameInput = document.querySelector('#pokeNameInput');
 $addBtn = document.querySelector('#addBtn');
 $clrBtn = document.querySelector('#clrBtn');
-$pokeNameInput = document.querySelector('#pokeNameInput');
+$typePickerContainer = document.querySelector('#'+typePickerPopupState.id);
+$primaryType = document.querySelector('#'+primaryTypeShellState.id);
+$secondaryType = document.querySelector('#'+secondaryTypeShellState.id);
+$teamList = document.querySelector('#teamList');
+$defTypesCountList = document.querySelector('#def-types-count');
 
 $primaryType.addEventListener('click', onClick_PrimaryTypeShell);
 $secondaryType.addEventListener('click', onClick_SecondaryTypeShell);
-$addBtn.addEventListener('click' ,onClick_addBtn);
+$addBtn.addEventListener('click', onClick_addBtn);
 $clrBtn.addEventListener('click', clearInputs);
 
 
-$teamList = document.querySelector('#teamList');
 $teamList.addEventListener('click', teamListHandler);
 $typePickerContainer.addEventListener('click', typePickerHandler);
-
+initializeTeamList();
 updateTeamList();
+
+// Analysis
 //#endregion
