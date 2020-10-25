@@ -4,12 +4,13 @@
 // HTML references
 let $primaryType,$secondaryType,$typePickerContainer;
 let $teamList;
-let $addBtn, $clrBtn;
+let $addBtn, $clrBtn, $pokeNameInput;
 let selectingTypeShell;
 let debug;
 
 let pokeTypes = ["Normal", "Fighting", "Flying", "Water", "Fire", "Grass", "Electric", "Ground", "Rock",
 "Dragon", "Steel", "Fairy", "Psychic", "Ghost", "Dark", "Bug", "Ice", "Poison"];
+let teamListArray;
 //#region Classes
 /* Classes declaration */
 class PokeType {
@@ -76,15 +77,7 @@ fetch('./types.json').then(
     }
 );*/
 
-
-
-// }}}}} Populate the TypeShellPopup with PokeTypes
-
-// }}}}} TypePicked event listener:
-/*
-    
-*/
-
+//#region Team selector
 // }}}}} Bind the popup click event listeners to the popup container 
 function handlePopupState () {
     switch (this.togglePopupState.state) {
@@ -100,8 +93,6 @@ function handlePopupState () {
 }
 
 function toggleStyle(element, classname) {
-    // llamar al toggle del state del popup, 
-    //el popup se deberia encargar del hidden
     if (!element.classList.contains(classname)){
         element.classList.add(classname);
     } else {
@@ -109,11 +100,16 @@ function toggleStyle(element, classname) {
     }
 }
 function removeTypeStyles(element){
-    pokeTypes.forEach(type => selectingTypeShell.classList?.remove(type));
+    pokeTypes.forEach(type => element.classList?.remove(type));
+}
+function clearTypeShells(){
+    $primaryType.innerText = "NONE";
+    $secondaryType.innerText = "NONE";
+    removeTypeStyles($primaryType);
+    removeTypeStyles($secondaryType);
 }
 function togglePopupVisibility(){
     toggleStyle($typePickerContainer,'is-invisible');
-    console.log(selectingTypeShell);
 }
 // }}}}} Event handler de click de primaryType y secondaryType
 function onClick_PrimaryTypeShell(){
@@ -124,28 +120,63 @@ function onClick_SecondaryTypeShell(){
     selectingTypeShell = $secondaryType;
     togglePopupVisibility();
 }
-/*
-function onClick_currentPokemonTypeShell() {
-    this.setState("Active");
-    this.transitionPopupState();
+function onClick_addBtn(){
+    // If name is empty assign a random name (con el teamlist array.length)
+    // Add to team list
+    // Reset the name input and the type shells
+    ;debugger
+    //$pokeNameInput.value
+    // should have at least one type
+    let newPokeName = $pokeNameInput.value;
+    let htmlPokeRow = skeletonHtmlPokeRow();
+    htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName',newPokeName);
+    let firstType = $primaryType.innerText;
+    if (firstType != undefined && firstType != "NONE") {
+        htmlPokeRow = htmlPokeRow.replace('templateFirstType is-hidden','templateFirstType');
+        htmlPokeRow = htmlPokeRow.replaceAll('templateFirstType',firstType);
+    }
+    let secondType = $secondaryType.innerText;
+    if (secondType != undefined && secondType != "NONE") {
+        htmlPokeRow = htmlPokeRow.replace('templateSecondType is-hidden','templateSecondType');
+        htmlPokeRow = htmlPokeRow.replaceAll('templateSecondType',secondType);
+    }
+    ;debugger
+    $teamList.innerHTML += htmlPokeRow;
+    clearInputs();
+    updateTeamList();
 }
-    > hacer una variable "global" que marque cual tipo está seleccionado --state???????
-    > cambiar estado propio a activo, y estado del popup
-*/
-
-// }}}}} Event handler de popup
-/*
-function onSelectPopupType(typeName){
-    current
+function skeletonHtmlPokeRow(){
+    return '<li class="added-pokemon columns">'
+    +'<!-- /// Pokemon /// -->'
+    +'<div class="column is-two-fifths addedPokemonName" title="templatePokemonName" data-field="pokeName">'
+    + 'templatePokemonName'
+    +'</div>'
+    +'<div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">'
+    +  '<div class="pokeType templateFirstType is-hidden" data-field="firstType">'
+    +    'templateFirstType'
+    +  '</div>'
+    +  '<div class="pokeType templateSecondType is-hidden" data-field="secondType">'
+    +    'templateSecondType'
+    +  '</div>'
+    +'</div>'
+    +'<div class="column is-one-fifth deleteBtnWrapper btn">'
+    +  '<div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>'
+    +'</div>'
+  +'</li>'
 }
-*/
 
+function clearInputs(){
+    clearTypeShells();
+    $typePickerContainer.classList.add('is-invisible');
+    $pokeNameInput.value = "";
+}
 // }}}}} 
 function teamListHandler(e){
     // Delete btn - remove the row
     if (e.path.find((x)=>x.classList?.contains("deleteBtn"))!==undefined){
         let row = e.path.find((x)=> x.localName == "li");
         row.remove();
+        updateTeamList();
     }
     // Click on a type - open or close details
     if (e.path.find((x)=>x.classList?.contains("pokeType"))!==undefined){
@@ -158,7 +189,6 @@ function typePickerHandler(e){
     // Assign selected type to the 
     if (e.path.find((x)=>x.classList?.contains("pokeType"))!==undefined){
         let type = e.path.find((x)=> x.classList.contains("pokeType")).innerText;
-        console.log(type)
         removeTypeStyles(selectingTypeShell);
         selectingTypeShell.classList.add(type);
         selectingTypeShell.innerText=type;
@@ -166,15 +196,61 @@ function typePickerHandler(e){
     selectingTypeShell = null;
     togglePopupVisibility();
 }
-// }}}}}  document on ready // main method
+//#endregion
+//#region Team analytics
+function mapHtmlListToPokeList(htmlList){
+    let pokeList = [];
+    for (let i = 0; i < htmlList.length; i++) {
+        let newPoke = new Object({"pokeName":"","primaryType":"","secondaryType":""});
+        for (let j = 0; j < htmlList[i].children.length; j++) {
+            let div = htmlList[i].children[j]
+            switch (div.attributes["data-field"]?.nodeValue) {
+                case "pokeName":
+                    newPoke.pokeName = div.innerText;
+                    break;
+                case "typeWrapper":
+                    if (div.children[0].innerText !== "templateFirstType" && div.children[0].innerText !== "") {
+                        newPoke.primaryType = div.children[0].innerText
+                    }
+                    if (div.children[1].innerText !== "templateSecondType" && div.children[1].innerText !== "") {
+                        newPoke.secondaryType = div.children[1].innerText
+                    }
+                    break;
+            }         
+        }
+        if (newPoke.primaryType != "" || newPoke.secondaryType !="") {
+            pokeList.push(newPoke);
+        }
+    }
+    console.groupCollapsed('PokeList (from mapHtmlListToPokeList)');
+    console.dir(pokeList);
+    console.groupEnd();
+    return pokeList;
+}
+function updateTeamList(){
+    // recalculate teamList array
+    ;debugger
+    teamListArray = mapHtmlListToPokeList($teamList.children);
+}
+//#endregion
+
 //#region Main method / OnReady / initialize
-$primaryType = document.querySelector('#'+primaryTypeShellState.id)
-$secondaryType = document.querySelector('#'+secondaryTypeShellState.id)
-$typePickerContainer = document.querySelector('#'+typePickerPopupState.id)
+$primaryType = document.querySelector('#'+primaryTypeShellState.id);
+$secondaryType = document.querySelector('#'+secondaryTypeShellState.id);
+$typePickerContainer = document.querySelector('#'+typePickerPopupState.id);
+$addBtn = document.querySelector('#addBtn');
+$clrBtn = document.querySelector('#clrBtn');
+$pokeNameInput = document.querySelector('#pokeNameInput');
+
 $primaryType.addEventListener('click', onClick_PrimaryTypeShell);
 $secondaryType.addEventListener('click', onClick_SecondaryTypeShell);
+$addBtn.addEventListener('click' ,onClick_addBtn);
+$clrBtn.addEventListener('click', clearInputs);
+
 
 $teamList = document.querySelector('#teamList');
 $teamList.addEventListener('click', teamListHandler);
 $typePickerContainer.addEventListener('click', typePickerHandler);
+
+updateTeamList();
 //#endregion

@@ -25,7 +25,7 @@
             </div>
             <div class="columns" id="row-2">
               <div class="column is-three-fifths">
-                <input type="text" class="input" placeholder="Charizard">
+                <input type="text" id="pokeNameInput" class="input" placeholder="Charizard">
               </div>
               <div class="column is-one-fifth"></div>
               <div class="column is-one-fifth btnPadding">
@@ -37,8 +37,8 @@
               <div class="column is-three-fifths"></div>
             </div>
             <div class="columns" id="row-4">
-              <div class="column is-one-fifth"><div class="pokeType TypeShell" id="primaryTypeShell">NONE</div></div>
-              <div class="column is-one-fifth"><div class="pokeType TypeShell" id="secondaryTypeShell">NONE</div></div>
+              <div class="column is-one-fifth"><div class="pokeType TypeShell btn" id="primaryTypeShell">NONE</div></div>
+              <div class="column is-one-fifth"><div class="pokeType TypeShell btn" id="secondaryTypeShell">NONE</div></div>
               <div class="column is-two-fifths"></div>
               <div class="column is-one-fifth btnPadding">
                 <input type="button" value="Clear" id="clrBtn" class="button is-fullwidth is-dark is-outlined">
@@ -48,97 +48,87 @@
               <ul id="teamList">
                 <!-- /// Pokemon /// -->
                 <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Corviknight">
+                  <div class="column is-two-fifths addedPokemonName" title="Corviknight" data-field="pokeName">
                     Corviknight
                   </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Flying">
-                      Flying
+                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
+                      <div class="pokeType Flying" data-field="firstType">
+                        Flying
+                      </div>
+                      <div class="pokeType Steel" data-field="secondType">
+                        Steel
                     </div>
                   </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Steel">
-                      Steel
-                    </div>
-                  </div>
-                  <div class="column is-one-fifth deleteBtnWrapper">
+                  <div class="column is-one-fifth deleteBtnWrapper btn">
                     <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
                   </div>
                 </li>
                 <!-- /// Pokemon /// -->
                 <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Raichu-alola">
+                  <div class="column is-two-fifths addedPokemonName" title="Raichu-alola" data-field="pokeName">
                     Raichu-alola
                   </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Electric">
+                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
+                    <div class="pokeType Electric" data-field="firstType">
                       Electric
                     </div>
-                  </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Psychic">
+                    <div class="pokeType Psychic" data-field="secondType">
                       Psychic
                     </div>
                   </div>
-                  <div class="column is-one-fifth deleteBtnWrapper">
+                  <div class="column is-one-fifth deleteBtnWrapper btn">
                     <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
                   </div>
                 </li>
                 <!-- /// Pokemon /// -->
 
                 <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Toxicroak">
+                  <div class="column is-two-fifths addedPokemonName" title="Toxicroak" data-field="pokeName">
                     Toxicroak
                   </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Fighting">
+                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
+                    <div class="pokeType Fighting" data-field="firstType">
                       Fighting
                     </div>
-                  </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Poison">
+                    <div class="pokeType Poison" data-field="secondType">
                       Poison
                     </div>
                   </div>
-                  <div class="column is-one-fifth deleteBtnWrapper">
+                  <div class="column is-one-fifth deleteBtnWrapper btn">
                     <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
                   </div>
                 </li>
                 <!-- /// Pokemon /// -->
                 <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Rhyperior">
+                  <div class="column is-two-fifths addedPokemonName" title="Rhyperior" data-field="pokeName">
                     Rhyperior
                   </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Ground">
+                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
+                    <div class="pokeType Ground" data-field="firstType">
                       Ground
                     </div>
-                  </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Rock">
-                      Rock
+                    <div class="pokeType Rock" data-field="secondType">
+                        Rock
                     </div>
                   </div>
-                  <div class="column is-one-fifth deleteBtnWrapper">
+                  <div class="column is-one-fifth deleteBtnWrapper btn">
                     <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
                   </div>
                 </li> 
                  <!-- /// Pokemon /// -->
                  <li class="added-pokemon columns">
-                  <div class="column is-two-fifths addedPokemonName" title="Dragapult">
+                  <div class="column is-two-fifths addedPokemonName" title="Dragapult" data-field="pokeName">
                     Dragapult
                   </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Ghost">
+                  <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
+                    <div class="pokeType Ghost" data-field="firstType">
                       Ghost
                     </div>
-                  </div>
-                  <div class="column is-one-fifth">
-                    <div class="pokeType Dragon">
+                    <div class="pokeType Dragon" data-field="secondType">
                       Dragon
                     </div>
                   </div>
-                  <div class="column is-one-fifth deleteBtnWrapper">
+                  <div class="column is-one-fifth deleteBtnWrapper btn">
                     <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
                   </div>
                 </li> 
@@ -148,102 +138,102 @@
           <div id="typePickerPopupContainer" class="is-invisible">
             <div class="columns">
               <div class="column is-one-third">
-                <div class="pokeType Normal">
+                <div class="pokeType Normal btn">
                   Normal
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Fighting">
+                <div class="pokeType Fighting btn">
                   Fighting
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Flying">
+                <div class="pokeType Flying btn">
                   Flying
                 </div>
               </div>
             </div>
             <div class="columns">
               <div class="column is-one-third">
-                <div class="pokeType Water">
+                <div class="pokeType Water btn">
                   Water
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Fire">
+                <div class="pokeType Fire btn">
                   Fire
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Grass">
+                <div class="pokeType Grass btn">
                   Grass
                 </div>
               </div>
             </div>
             <div class="columns">
               <div class="column is-one-third">
-                <div class="pokeType Electric">
+                <div class="pokeType Electric btn">
                   Electric
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Ground">
+                <div class="pokeType Ground btn">
                   Ground
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Rock">
+                <div class="pokeType Rock btn">
                   Rock
                 </div>
               </div>
             </div>
             <div class="columns">
               <div class="column is-one-third">
-                <div class="pokeType Dragon">
+                <div class="pokeType Dragon btn">
                   Dragon
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Steel">
+                <div class="pokeType Steel btn">
                   Steel
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Fairy">
+                <div class="pokeType Fairy btn">
                   Fairy
                 </div>
               </div>
             </div>
             <div class="columns">
               <div class="column is-one-third">
-                <div class="pokeType Psychic">
+                <div class="pokeType Psychic btn">
                   Psychic
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Ghost">
+                <div class="pokeType Ghost btn">
                   Ghost
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Dark">
+                <div class="pokeType Dark btn">
                   Dark
                 </div>
               </div>
             </div>
             <div class="columns">
               <div class="column is-one-third">
-                <div class="pokeType Bug">
+                <div class="pokeType Bug btn">
                   Bug
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Ice">
+                <div class="pokeType Ice btn">
                   Ice
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="pokeType Poison">
+                <div class="pokeType Poison btn">
                   Poison
                 </div>
               </div>
