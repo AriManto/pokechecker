@@ -1,128 +1,200 @@
 [
     {
-        "name":"Normal",
+        "typeName":"Normal",
         "foreColor":"#555555",
         "bgColor": "#C8C8C8",
         "weakDef": ["Fighting"],
-        "strongAtk": [""]
+        "resistDef":[],
+        "immuneDef":["Ghost"],
+        "strongAtk": [],
+        "weakAtk": ["Rock","Steel"],
+        "uselessAtk": ["Ghost"]
     },
     {
-        "name":"Fighting",
+        "typeName":"Fighting",
         "foreColor":"#EEEEEE",
         "bgColor": "#c03028",
         "weakDef": ["Fairy","Flying","Psychic"],
-        "strongAtk": ["Dark","Ice","Normal","Rock","Steel"]
+        "resistDef":["Bug","Dark","Rock"],
+        "immuneDef":[],
+        "strongAtk": ["Dark","Ice","Normal","Rock","Steel"],
+        "weakAtk": ["Bug","Fairy","Flying","Poison","Psychic"],
+        "uselessAtk": ["Ghost"]
     },
     {
-        "name":"Flying",
+        "typeName":"Flying",
         "foreColor":"#EEEEEE",
         "bgColor": "#a890f0",
         "weakDef": ["Electric","Ice","Rock"],
-        "strongAtk": ["Bug","Fighting","Grass"]
+        "resistDef":["Bug","Fighting","Grass"],
+        "immuneDef":["Ground"],
+        "strongAtk": ["Bug","Fighting","Grass"],
+        "weakAtk": ["Electric","Rock","Steel"],
+        "uselessAtk": []
     },
     {
-        "name":"Water",
+        "typeName":"Water",
         "foreColor":"#EEEEEE",
         "bgColor": "#0022BB",
         "weakDef": ["Electric","Grass"],
-        "strongAtk": ["Fire","Ground","Rock"]
+        "resistDef":["Fire", "Ice", "Steel", "Water"],
+        "immuneDef":[],
+        "strongAtk": ["Fire","Ground","Rock"],
+        "weakAtk": ["Dragon","Grass","Water"],
+        "uselessAtk": []
     },
     {
-        "name":"Fire",
+        "typeName":"Fire",
         "foreColor":"#EEEEEE",
         "bgColor": "#f08030",
         "weakDef": ["Ground","Rock","Water"],
-        "strongAtk": ["Bug","Grass","Ice","Steel"]
+        "resistDef":["Bug","Fairy","Fire","Grass","Ice","Steel"],
+        "immuneDef":[],
+        "strongAtk": ["Bug","Grass","Ice","Steel"],
+        "weakAtk": ["Dragon","Fire","Rock","Water"],
+        "uselessAtk": []
     },
     {
-        "name":"Grass",
+        "typeName":"Grass",
         "foreColor":"#EEEEEE",
         "bgColor": "#009000",
         "weakDef": ["Bug","Fire","Flying","Ice","Poison"],
-        "strongAtk": ["Ground","Rock","Water"]
+        "resistDef":["Electric","Grass","Ground","Water"],
+        "immuneDef":[],
+        "strongAtk": ["Ground","Rock","Water"],
+        "weakAtk": ["Bug","Dragon","Fire","Flying","Grass","Poison","Steel"],
+        "uselessAtk": []
     },
     {
-        "name":"Electric",
+        "typeName":"Electric",
         "foreColor":"#EEEEEE",
         "bgColor": "#f8d030",
         "weakDef": ["Ground"],
-        "strongAtk": ["Flying","Water"]
+        "resistDef":["Electric","Flying","Steel"],
+        "immuneDef":[],
+        "strongAtk": ["Flying","Water"],
+        "weakAtk": ["Dragon","Electric","Grass"],
+        "uselessAtk": ["Ground"]
     },
     {
-        "name":"Ground",
+        "typeName":"Ground",
         "foreColor":"#EEEEEE",
         "bgColor": "#e0c068",
         "weakDef": ["Grass","Ice","Water"],
-        "strongAtk": ["Electric","Fire","Poison","Rock","Steel"]
+        "resistDef":["Poison","Rock"],
+        "immuneDef":["Electric"],
+        "strongAtk": ["Electric","Fire","Poison","Rock","Steel"],
+        "weakAtk": ["Bug","Grass"],
+        "uselessAtk": ["Flying"]
     },
     {
-        "name":"Rock",
+        "typeName":"Rock",
         "foreColor":"#EEEEEE",
         "bgColor": "#b8a038",
         "weakDef": ["Fighting","Grass","Ground","Steel","Water"],
-        "strongAtk": ["Bug","Fire","Flying","Ice"]
+        "resistDef":["Fire","Flying","Normal","Poison"],
+        "immuneDef":[],
+        "strongAtk": ["Bug","Fire","Flying","Ice"],
+        "weakAtk": ["Fighting","Ground","Steel"],
+        "uselessAtk": []
     },
     {
-        "name":"Dragon",
+        "typeName":"Dragon",
         "foreColor":"#EEEEEE",
         "bgColor": "#7038f8",
         "weakDef": ["Dragon","Fairy","Ice"],
-        "strongAtk": ["Dragon"]
+        "resistDef":["Electric","Fire","Grass","Water"],
+        "immuneDef":[],
+        "strongAtk": ["Dragon"],
+        "weakAtk": ["Steel"],
+        "uselessAtk": ["Fairy"]
     },
     {
-        "name":"Steel",
+        "typeName":"Steel",
         "foreColor":"#EEEEEE",
         "bgColor": "#b8b8d0",
         "weakDef": ["Fighting","Fire","Ground"],
-        "strongAtk": ["Fairy","Ice","Rock"]
+        "resistDef":["Bug","Dragon","Fairy","Flying","Grass","Ice","Normal","Psychic","Rock","Steel"],
+        "immuneDef":["Poison"],
+        "strongAtk": ["Fairy","Ice","Rock"],
+        "weakAtk": ["Electric","Fire","Steel","Water"],
+        "uselessAtk": []
     },
     {
-        "name":"Fairy",
+        "typeName":"Fairy",
         "foreColor":"#EEEEEE",
         "bgColor": "#F98CFF",
         "weakDef": ["Poison","Steel"],
-        "strongAtk": ["Dark","Dragon","Fighting"]
+        "resistDef":["Bug","Dark","Fighting"],
+        "immuneDef":["Dragon"],
+        "strongAtk": ["Dark","Dragon","Fighting"],
+        "weakAtk": ["Fire","Poison","Steel"],
+        "uselessAtk": []
     },
     {
-        "name":"Psychic",
+        "typeName":"Psychic",
         "foreColor":"#EEEEEE",
         "bgColor": "#f85888",
         "weakDef": ["Bug","Dark","Ghost"],
-        "strongAtk": ["Fighting","Poison"]
+        "resistDef":["Fighting","Psychic"],
+        "immuneDef":[],
+        "strongAtk": ["Fighting","Poison"],
+        "weakAtk": ["Psychic","Steel"],
+        "uselessAtk": ["Dark"]
     },
     {
-        "name":"Ghost",
+        "typeName":"Ghost",
         "foreColor":"#EEEEEE",
         "bgColor": "#705898",
         "weakDef": ["Dark","Ghost"],
-        "strongAtk": ["Ghost","Psychic"]
+        "resistDef":["Bug","Poison"],
+        "immuneDef":["Fighting","Normal"],
+        "strongAtk": ["Ghost","Psychic"],
+        "weakAtk": ["Dark"],
+        "uselessAtk": ["Normal"]
     },
     {
-        "name":"Dark",
+        "typeName":"Dark",
         "foreColor":"#EEEEEE",
         "bgColor": "#705848",
         "weakDef": ["Bug","Fairy","Fighting"],
-        "strongAtk": ["Ghost","Psychic"]
+        "resistDef":["Dark","Ghost"],
+        "immuneDef":["Psychic"],
+        "strongAtk": ["Ghost","Psychic"],
+        "weakAtk": ["Dark","Fairy","Fighting"],
+        "uselessAtk": []
     },
     {
-        "name":"Bug",
+        "typeName":"Bug",
         "foreColor":"#EEEEEE",
         "bgColor": "#a8b820",
         "weakDef": ["Fire","Flying","Rock"],
-        "strongAtk": ["Dark","Grass","Psychic"]
+        "resistDef":["Fighting","Grass","Ground"],
+        "immuneDef":[],
+        "strongAtk": ["Dark","Grass","Psychic"],
+        "weakAtk": ["Fairy","Fighting","Fire","Flying","Ghost","Poison","Steel"],
+        "uselessAtk": []
     },
     {
-        "name":"Ice",
+        "typeName":"Ice",
         "foreColor":"#EEEEEE",
         "bgColor": "#98d8d8",
         "weakDef": ["Fighting","Fire","Rock","Steel"],
-        "strongAtk": ["Dragon","Flying","Grass","Ground"]
+        "resistDef":["Ice"],
+        "immuneDef":[],
+        "strongAtk": ["Dragon","Flying","Grass","Ground"],
+        "weakAtk": ["Fire","Ice","Steel","Water"],
+        "uselessAtk": []
     },
     {
-        "name":"Poison",
+        "typeName":"Poison",
         "foreColor":"#EEEEEE",
         "bgColor": "#a040a0",
         "weakDef": ["Ground","Psychic"],
-        "strongAtk": ["Fairy","Grass"]
+        "resistDef":["Bug","Fairy","Fighting","Grass","Poison"],
+        "immuneDef":[],
+        "strongAtk": ["Fairy","Grass"],
+        "weakAtk": ["Ghost","Ground","Poison","Rock"],
+        "uselessAtk": ["Steel"]
     }
 ]

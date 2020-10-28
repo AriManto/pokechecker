@@ -7,21 +7,17 @@ let $teamList;
 let $addBtn, $clrBtn, $pokeNameInput;
 let selectingTypeShell;
 let $defTypesCountList;
+let $defWeakList;
 let debug;
 // Model entities
 let teamListArray;
 let defTypesCountListArray;
-//#region // Data - should be fetched from JSON
-let pokeTypes = ["Normal", "Fighting", "Flying", "Water", "Fire", "Grass", "Electric", "Ground", "Rock",
-    "Dragon", "Steel", "Fairy", "Psychic", "Ghost", "Dark", "Bug", "Ice", "Poison"];
-let initialListArray = [
-    { "name": "Rhyperior", "primaryType": "Ground", "secondaryType": "Rock" },
-    { "name": "Crawdaunt", "primaryType": "Water", "secondaryType": "Dark" },
-    { "name": "Excadrill", "primaryType": "Ground", "secondaryType": "Steel" },
-    { "name": "Urshifu - Single Strike", "primaryType": "Fighting", "secondaryType": "Dark" },
-    { "name": "Hydreigon", "primaryType": "Dragon", "secondaryType": "Dark" },
-    { "name": "Tyranitar", "primaryType": "Rock", "secondaryType": "Dark" }
-];
+let pokeDef_allDefBehaviorListArray;
+let teamDefWeakListArray;
+//#region 
+// Data - fetched from JSON
+let pokeTypes;
+let initialListArray;
 //#endregion
 //#region Classes
 /* Classes declaration */
@@ -79,18 +75,28 @@ let typePickerPopupState = {
 }
 //#endregion
 //primaryTypeShellState.transitionState(); --works
-
+let fetcher;
 // }}}}} Fetch data from JSON and parse to PokeType
-/*let typesJson; 
-fetch('./types.json').then(
-    (res) => {
-        typesJson=res.json();
-        console.dir(typesJson);
-    }
-);*/
+async function asyncLoadTypes(){
+    fetcher = await fetch('./types.json')
+    .then(res => {
+            return res.json();
+        })
+    .then(data => {
+        pokeTypes = [...data];
+    });
+    fetcher = await fetch('./initialList.json')
+    .then(res => {
+            return res.json();
+        })
+    .then(data => {
+        initialListArray = [...data];
+    });
+    initializeTeamList();
+    updateTeamListEntity();
+}
 
 //#region Team selector
-// }}}}} Bind the popup click event listeners to the popup container 
 function handlePopupState() {
     switch (this.togglePopupState.state) {
         case 'new':
@@ -112,7 +118,7 @@ function toggleStyle(element, classname) {
     }
 }
 function removeTypeStyles(element) {
-    pokeTypes.forEach(type => element.classList?.remove(type));
+    pokeTypes.forEach(type => element.classList?.remove(type.typeName));
 }
 function clearTypeShells() {
     $primaryType.innerText = "NONE";
@@ -124,7 +130,6 @@ function togglePopupVisibility() {
     toggleStyle($typePickerContainer, 'is-invisible');
 }
 
-// }}}}} Event handler de click de primaryType y secondaryType
 function onClick_PrimaryTypeShell() {
     selectingTypeShell = $primaryType;
     togglePopupVisibility();
@@ -142,7 +147,7 @@ function onClick_addBtn() {
     htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName', newPokeName);
     $teamList.innerHTML += htmlPokeRow;
     clearInputs();
-    updateTeamList();
+    updateTeamListEntity();
 }
 function mapPokeToRow(name, firstType, secondType) {
     let htmlPokeRow = skeletonHtmlPokeRow();
@@ -187,14 +192,14 @@ function clearInputs() {
     clearTypeShells();
     $typePickerContainer.classList.add('is-invisible');
     $pokeNameInput.value = "";
+    ;debugger
 }
-// }}}}} 
 function teamListHandler(e) {
     // Delete btn - remove the row
     if (e.path.find((x) => x.classList?.contains("deleteBtn")) !== undefined) {
         let row = e.path.find((x) => x.localName == "li");
         row.remove();
-        updateTeamList();
+        updateTeamListEntity();
     }
     // Click on a type - open or close details
     if (e.path.find((x) => x.classList?.contains("pokeType")) !== undefined) {
@@ -243,13 +248,138 @@ function mapHtmlListToPokeList(htmlList) {
     console.groupEnd();
     return pokeList;
 }
-function updateTeamList() {
-    // recalculate teamList array
+function updateTeamListEntity() {
+    // recalculate teamList array from entity to view
+    updateTeamListView();
+    ;debugger
+    updateDefTypesCount();
+    updatePokeDef_allDefBehaviorListArray();
+    // TODO: team weak (x2,x4), team resist (x2,x4), team immunities 
+    
+    // updateDefWeakList();
+
+
+}
+function updatePokeDef_allDefBehaviorListArray(){
+    pokeDef_allDefBehaviorListArray = calculatePokeDefBehavior();
+    console.groupCollapsed("pokeDefBehaviorList");
+    console.dir(pokeDef_allDefBehaviorListArray);
+    console.groupEnd();
+    ;debugger
+}
+function calculatePokeDefBehavior() {
+    let pokeDefBehaviorList = [];
+    teamListArray.forEach((poke) => {
+        // Pokename, x2 weaknesses[types]: x4 weaknesses[types]
+        let pokeDefBehavior = new Object({"pokeName":poke.pokeName,"x4weak":[],"x2weak":[],"immune":[],"x2resist":[],"x4resist":[]});
+        let primaryType = pokeTypes.find(x => x.typeName == poke.primaryType);
+        let secondaryType = pokeTypes.find(x => x.typeName == poke.secondaryType);
+        let weakArray = [];
+        let resistArray = [];
+        let immuneArray = [];
+        let aggregateArray = [];
+
+        if (primaryType != undefined) {
+            defBehaviorByType(primaryType,'weakDef',weakArray);
+            defBehaviorByType(primaryType,'resistDef',resistArray);
+            defBehaviorByType(primaryType,'immuneDef',immuneArray);   
+        if (secondaryType != undefined) {
+            defBehaviorByType(secondaryType,'weakDef',weakArray);
+            defBehaviorByType(secondaryType,'resistDef',resistArray);
+            defBehaviorByType(secondaryType,'immuneDef',immuneArray); 
+        }
+        // TODO: fix this part so the hacks are not needed for neutrality and immunity
+        // Perhaps "group by" the aggregateArray?
+        // Aggreggate the individual types
+        weakArray.forEach((weakness) => {
+            if (!aggregateArray.find((x) => x.typeName == weakness)){
+                aggregateArray.push(new Object({"typeName":weakness.typeName,"dmgBehavior":-weakness.count}))
+            }
+            else {
+                aggregateArray.find((x) => x.typeName == weakness.typeName).dmgBehavior-=weakness.count;
+            }
+        });
+        resistArray.forEach((resistance) => {
+            if (!aggregateArray.find((x) => x.typeName == resistance)){
+                aggregateArray.push(new Object({"typeName":resistance.typeName,"dmgBehavior":+resistance.count}))
+            }
+            else {
+                aggregateArray.find((x) => x.typeName == resistance).dmgBehavior+=resistance.count;
+            }
+        });
+        immuneArray.forEach((immunity) => {
+            if (!aggregateArray.find((x) => x.typeName == immunity)){
+                aggregateArray.push(new Object({"typeName":immunity.typeName,"dmgBehavior":+100}))
+            }
+            else {
+                aggregateArray.find((x) => x.typeName == immunity).dmgBehavior=100;
+            }
+        });
+        let dmgBehField = 0;
+        // Convert the aggreggate to final behavior object
+        aggregateArray.forEach((agg) => {
+            switch (agg.dmgBehavior) {
+                case -2: dmgBehField = 'x4weak';
+                    break;
+                case -1: dmgBehField = 'x2weak';
+                    break;
+                case 1: dmgBehField = 'x2resist';
+                    break;
+                case 2: dmgBehField = 'x4resist';
+                    break;
+                case 100: dmgBehField = 'immune';
+                    break;
+                default: break;
+            }
+            pokeDefBehavior[dmgBehField].push(agg.typeName);
+        });
+        // Hack for neutrality
+        pokeDefBehavior.x2weak?.forEach((weak) => {
+            if (pokeDefBehavior.x2resist.find((res) => res == weak)){
+                let neutralType = weak;
+                pokeDefBehavior.x2resist = pokeDefBehavior.x2resist.filter( res => res != neutralType);
+                pokeDefBehavior.x2weak = pokeDefBehavior.x2weak.filter( weak => weak != neutralType);
+            }
+        });
+        // Hack for immunity
+        pokeDefBehavior.immune?.forEach((immunity) => {
+            pokeDefBehavior.x2resist = pokeDefBehavior.x2resist.filter( x2res => x2res != immunity);
+            pokeDefBehavior.x2weak = pokeDefBehavior.x2weak.filter( x2weak => x2weak != immunity);
+            pokeDefBehavior.x4resist = pokeDefBehavior.x4resist.filter( x4res => x4res != immunity);
+            pokeDefBehavior.x4weak = pokeDefBehavior.x4weak.filter( x4weak => x4weak != immunity);
+
+            
+        });
+        pokeDefBehaviorList.push(pokeDefBehavior);
+    }
+    });
+    return pokeDefBehaviorList;
+}
+function defBehaviorByType(pokeType, field, array){
+    pokeType[field]?.forEach((opponentType) => {
+        if (!array.find((x) => x.typeName == opponentType)){
+            array.push(new Object({"typeName":opponentType,"count":1}))
+        }
+        else {
+            array.find((x) => x.typeName == opponentType).count+=1;
+        }
+    });
+}
+
+
+function updateTeamListView(){
     teamListArray = mapHtmlListToPokeList($teamList.children);
-    defTypesCountListArray = calculateTeamTypesCount();
-    defTypesCountListArray = orderDefTypesDescending(defTypesCountListArray);
-    // update analytics
+}
+function updateDefTypesCount(){
+    defTypesCountListArray = orderDefTypesDescending(calculateTeamTypesCount());
     $defTypesCountList.innerHTML = mapDefTypesCountToHTML(defTypesCountListArray);
+}
+function updateDefWeakList(){
+    //get from DefBehavior
+    teamDefWeakListArray = calculateTeamDefWeakList();
+    ;debugger
+    $defWeakList.innerHTML = mapTeamDefWeakListToHTML(teamDefWeakListArray);
+    ;debugger
 }
 
 function mapDefTypesCountToHTML(countArray) {
@@ -261,14 +391,32 @@ function mapDefTypesCountToHTML(countArray) {
                 <span class="count">${typeCount.count}</span>
             </li>`
         }
-    })
+    });
     return HTMLcountList;
+}
+function mapTeamDefWeakListToHTML(teamDefWeakList){
+    let HTMLDefWeakList = "";
+    if(teamDefWeakList.length > 0){
+
+        teamDefWeakList.forEach((defWeak) => {
+            HTMLDefWeakList += `<li>
+            <span class="pokeType ${defWeak.typeName}">${defWeak.typeName}</span>`;
+            if (defWeak.x4 > 0) {
+                HTMLDefWeakList += `<span class="x4weak">X4:</span><span class="count">${defWeak.x4}</span>`
+            }
+            if (defWeak.x2 > 0) {
+                HTMLDefWeakList += `<span class="x2weak">X2:</span><span class="count">${defWeak.x2}</span>`
+            }
+            HTMLDefWeakList += '</li>'; 
+        });
+    }
+    return HTMLDefWeakList;
 }
 
 function calculateTeamTypesCount() {
     defTypesCountListArray = [];
     pokeTypes.forEach((type) => {
-        let typeCount = new Object({ "type": type, "count": 0 });
+        let typeCount = new Object({ "type": type.typeName, "count": 0 });
         defTypesCountListArray.push(typeCount);
     });
     teamListArray.forEach((poke) => {
@@ -281,10 +429,32 @@ function calculateTeamTypesCount() {
             defTypesCountListArray.find((x) => x.type == secondaryType).count += 1;
         }
     })
+    //TODO: remove items with count o
     console.groupCollapsed("Type count list");
     console.dir(defTypesCountListArray);
     console.groupEnd();
+    ;debugger
     return defTypesCountListArray;
+}
+function calculateTeamDefWeakList() {
+    teamDefWeakListArray = [];
+    pokeTypes.forEach((type) => {
+        let typeDefWeak= new Object({ "type": type.typeName, "x2": 0 , "x4": 0, "xHalf":0, "xQuarter":0, "xImmune":0});
+        defTypesCountListArray.push(typeDefWeak);
+    });
+    // typeName, x2, x4
+    /*
+    pokeDefWeakListArray.forEach(pokeDefWeak => {
+        if (pokeDefWeak.x2) {
+            pokeDefWeak.x2.forEach(x2weak => {
+                
+            });
+        }
+        if (pokeDefWeak.x4) {
+
+        }
+
+    });*/
 }
 
 function orderDefTypesDescending(arr = defTypesCountListArray) {
@@ -309,6 +479,7 @@ function orderDefTypesDescending(arr = defTypesCountListArray) {
 //#endregion
 
 //#region Main method / OnReady / initialize
+asyncLoadTypes(); // Load types from JSON and initialize teamList
 $pokeNameInput = document.querySelector('#pokeNameInput');
 $addBtn = document.querySelector('#addBtn');
 $clrBtn = document.querySelector('#clrBtn');
@@ -317,6 +488,7 @@ $primaryType = document.querySelector('#' + primaryTypeShellState.id);
 $secondaryType = document.querySelector('#' + secondaryTypeShellState.id);
 $teamList = document.querySelector('#teamList');
 $defTypesCountList = document.querySelector('#def-types-count');
+$defWeakList = document.querySelector('#def-weak-list');
 
 $primaryType.addEventListener('click', onClick_PrimaryTypeShell);
 $secondaryType.addEventListener('click', onClick_SecondaryTypeShell);
@@ -326,8 +498,7 @@ $clrBtn.addEventListener('click', clearInputs);
 
 $teamList.addEventListener('click', teamListHandler);
 $typePickerContainer.addEventListener('click', typePickerHandler);
-initializeTeamList();
-updateTeamList();
+
 
 // Analysis
 //#endregion

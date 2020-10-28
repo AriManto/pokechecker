@@ -1,0 +1,12 @@
+[
+    { "name": "Scizor", "primaryType": "Bug", "secondaryType": "Steel" },
+    { "name": "Corviknight", "primaryType": "Flying", "secondaryType": "Steel" },
+    { "name": "Drifblim", "primaryType": "Ghost", "secondaryType": "Flying" },
+    { "name": "Rhyperior", "primaryType": "Ground", "secondaryType": "Rock" },
+    { "name": "Crawdaunt", "primaryType": "Water", "secondaryType": "Dark" },
+    { "name": "Urshifu - Single Strike", "primaryType": "Fighting", "secondaryType": "Dark" },
+    { "name": "Hydreigon", "primaryType": "Dragon", "secondaryType": "Dark" },
+    { "name": "Tyranitar", "primaryType": "Rock", "secondaryType": "Dark" },
+    { "name": "Swampert", "primaryType": "Water", "secondaryType": "Ground" },
+    { "name": "Grimmsnarl", "primaryType": "Dark", "secondaryType": "Fairy" }
+]
