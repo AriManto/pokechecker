@@ -143,11 +143,30 @@ function onClick_addBtn() {
     let newPokeName = $pokeNameInput.value;
     let firstType = $primaryType.innerText;
     let secondType = $secondaryType.innerText;
-    let htmlPokeRow = mapPokeToRow(newPokeName, firstType, secondType);
-    htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName', newPokeName);
-    $teamList.innerHTML += htmlPokeRow;
+
+    let isNewPokeValid = true;
+    let errorMsg ="";
+    
+    if (newPokeName == ""){
+        isNewPokeValid = false;
+        errorMsg += "Pokemon name cannot be blank. \n";
+    }
+    if (firstType == "NONE" && secondType == "NONE"){
+        isNewPokeValid = false;
+        errorMsg += "Select at least one type.";
+    }
+
+    if (isNewPokeValid){
+        let htmlPokeRow = mapPokeToRow(newPokeName, firstType, secondType);
+        htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName', newPokeName);
+        $teamList.innerHTML += htmlPokeRow;
+        updateTeamListEntity();
+    }
+    else {
+        alert(errorMsg);
+    }
+
     clearInputs();
-    updateTeamListEntity();
 }
 function mapPokeToRow(name, firstType, secondType) {
     let htmlPokeRow = skeletonHtmlPokeRow();

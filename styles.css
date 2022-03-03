@@ -10,7 +10,7 @@ main {display: flex;justify-content: space-between;height: 1000px;width: 1000px;
     width: 580px; height:560px; padding: 16px 32px; background-color: #ECEFF1;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25); border-radius: 4px 0px 0px 4px;
 }
-.button:hover {transition: background-color 0.25s ease;} 
+.button:hover {transition: background-color 0.25s ease; cursor:pointer;} 
 /* --- Selection form grid --- */
 .columns {margin: 0;}
 .column {padding: 0px;}
