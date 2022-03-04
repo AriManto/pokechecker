@@ -4,7 +4,7 @@
 // HTML references
 let $primaryType, $secondaryType, $typePickerContainer;
 let $teamList;
-let $addBtn, $clrBtn, $pokeNameInput;
+let $addBtn, $clrBtn, $pokeNameInput, $clrTeamBtn;
 let selectingTypeShell;
 let $defTypesCountList;
 let $defWeakList;
@@ -170,12 +170,12 @@ function onClick_addBtn() {
 }
 function mapPokeToRow(name, firstType, secondType) {
     let htmlPokeRow = skeletonHtmlPokeRow();
-    htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName', name);
+    htmlPokeRow = htmlPokeRow.replaceAll('templatePokemonName', name); 
     if (firstType != undefined && firstType != "NONE") {
         htmlPokeRow = htmlPokeRow.replace('templateFirstType is-hidden', 'templateFirstType');
         htmlPokeRow = htmlPokeRow.replaceAll('templateFirstType', firstType);
     }
-    if (secondType != undefined && secondType != "NONE") {
+    if (secondType != undefined && secondType != "NONE" && secondType != firstType) {
         htmlPokeRow = htmlPokeRow.replace('templateSecondType is-hidden', 'templateSecondType');
         htmlPokeRow = htmlPokeRow.replaceAll('templateSecondType', secondType);
     }
@@ -211,7 +211,10 @@ function clearInputs() {
     clearTypeShells();
     $typePickerContainer.classList.add('is-invisible');
     $pokeNameInput.value = "";
-    ;debugger
+}
+function clearTeamList(){
+    $teamList.innerHTML = "";
+    updateTeamListEntity();
 }
 function teamListHandler(e) {
     // Delete btn - remove the row
@@ -502,6 +505,7 @@ asyncLoadTypes(); // Load types from JSON and initialize teamList
 $pokeNameInput = document.querySelector('#pokeNameInput');
 $addBtn = document.querySelector('#addBtn');
 $clrBtn = document.querySelector('#clrBtn');
+$clrTeamBtn = document.querySelector('#clrTeamBtn');
 $typePickerContainer = document.querySelector('#' + typePickerPopupState.id);
 $primaryType = document.querySelector('#' + primaryTypeShellState.id);
 $secondaryType = document.querySelector('#' + secondaryTypeShellState.id);
@@ -513,6 +517,7 @@ $primaryType.addEventListener('click', onClick_PrimaryTypeShell);
 $secondaryType.addEventListener('click', onClick_SecondaryTypeShell);
 $addBtn.addEventListener('click', onClick_addBtn);
 $clrBtn.addEventListener('click', clearInputs);
+$clrTeamBtn.addEventListener('click', clearTeamList);
 
 
 $teamList.addEventListener('click', teamListHandler);
