@@ -4,7 +4,7 @@
 // HTML references
 let $primaryType, $secondaryType, $typePickerContainer;
 let $teamList;
-let $addBtn, $clrBtn, $pokeNameInput, $clrTeamBtn;
+let $addBtn, $clrBtn, $pokeNameInput, $clrTeamBtn, $defaultTeamBtn;
 let selectingTypeShell;
 let $defTypesCountList;
 let $defWeakList;
@@ -184,10 +184,10 @@ function mapPokeToRow(name, firstType, secondType) {
 function skeletonHtmlPokeRow() {
     return `<li class="added-pokemon columns">
     <!-- /// Pokemon /// -->
-    <div class="column is-two-fifths addedPokemonName" title="templatePokemonName" data-field="pokeName">
+    <div class="column is-5 addedPokemonName" title="templatePokemonName" data-field="pokeName">
     templatePokemonName
     </div>
-    <div class="column is-two-fifths pokeTypesWrapper" data-field="typeWrapper">
+    <div class="column is-5 pokeTypesWrapper" data-field="typeWrapper">
      <div class="pokeType templateFirstType is-hidden" data-field="firstType">
        templateFirstType
      </div>
@@ -195,16 +195,18 @@ function skeletonHtmlPokeRow() {
         templateSecondType
       </div>
     </div>
-    <div class="column is-one-fifth deleteBtnWrapper btn">
+    <div class="column is-2 deleteBtnWrapper btn">
       <div class="deleteBtn"><i class="fas fa-minus-circle fa-lg"></i></div>
     </div>
   </li>`
 }
 function initializeTeamList() {
+    $teamList.innerHTML = "";
     initialListArray.forEach((poke) => {
         let htmlPokeRow = mapPokeToRow(poke.name, poke.primaryType, poke.secondaryType);
         $teamList.innerHTML += htmlPokeRow;
-    })
+    });
+    updateTeamListEntity();
 }
 
 function clearInputs() {
@@ -506,6 +508,7 @@ $pokeNameInput = document.querySelector('#pokeNameInput');
 $addBtn = document.querySelector('#addBtn');
 $clrBtn = document.querySelector('#clrBtn');
 $clrTeamBtn = document.querySelector('#clrTeamBtn');
+$defaultTeamBtn = document.querySelector('#defaultTeamBtn');
 $typePickerContainer = document.querySelector('#' + typePickerPopupState.id);
 $primaryType = document.querySelector('#' + primaryTypeShellState.id);
 $secondaryType = document.querySelector('#' + secondaryTypeShellState.id);
@@ -518,6 +521,7 @@ $secondaryType.addEventListener('click', onClick_SecondaryTypeShell);
 $addBtn.addEventListener('click', onClick_addBtn);
 $clrBtn.addEventListener('click', clearInputs);
 $clrTeamBtn.addEventListener('click', clearTeamList);
+$defaultTeamBtn.addEventListener('click', initializeTeamList);
 
 
 $teamList.addEventListener('click', teamListHandler);
